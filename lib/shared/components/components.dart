@@ -134,6 +134,9 @@ Widget buildTaskItem({
               radius: 40,
               child: Text(
                 '${model['time']}',
+                style: const TextStyle(
+                  color: Colors.black,
+                ),
               ),
             ),
             const SizedBox(
@@ -146,7 +149,8 @@ Widget buildTaskItem({
                 children: [
                   Text(
                     '${model['title']}',
-                    style: const TextStyle(
+                    style: TextStyle(
+                      color: AppCubit.get(context).isDark ? Colors.white: Colors.black,
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
@@ -172,7 +176,7 @@ Widget buildTaskItem({
                 );
               },
               icon: Icon(done),
-              color: Colors.green,
+              color: AppCubit.get(context).isDark ? Colors.white: Colors.green,
             ),
             IconButton(
               onPressed: ()
@@ -183,7 +187,7 @@ Widget buildTaskItem({
                 );
               },
               icon: Icon(archive),
-              color: Colors.grey,
+              color: AppCubit.get(context).isDark ? Colors.white: Colors.grey,
             ),
           ],
         ),
