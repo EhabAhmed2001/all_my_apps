@@ -1,7 +1,6 @@
-import 'package:all_my_apps/layout/news%20app/news_screen.dart';
+import 'dart:io';
+
 import 'package:all_my_apps/layout/todo%20screen/todo_screen.dart';
-import 'package:all_my_apps/modules/counter/cubit/cubit.dart';
-import 'package:all_my_apps/modules/login_screen/login_screen.dart';
 import 'package:all_my_apps/shared/bloc_observer.dart';
 import 'package:all_my_apps/shared/network/remote/dio_helper.dart';
 import 'package:all_my_apps/shared/todo_cubit/cubit.dart';
@@ -10,14 +9,20 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'modules/all_apps/all_app.dart';
-import 'modules/counter/counter.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Directory dir = await getApplicationDocumentsDirectory();
+  await Hive.initFlutter(dir.path);
+  await Hive.openBox('dark');
+
   dio_helper.init();
   BlocOverrides.runZoned(
         () {
-      // Use cubits...
+          // Use cubits...
           runApp(MyApp());
     },
     blocObserver: MyBlocObserver(),
@@ -90,7 +95,7 @@ class MyApp extends StatelessWidget {
                   ),
                 ),
               ),
-              themeMode: cu.isDark? ThemeMode.dark : ThemeMode.light ,
+              themeMode: cu.darkMode? ThemeMode.dark : ThemeMode.light ,
               home: todo_screen(),
             );
           },

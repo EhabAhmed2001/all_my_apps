@@ -1,6 +1,7 @@
 import 'package:all_my_apps/modules/archive_screen/archive_screen.dart';
 import 'package:all_my_apps/modules/done_screen/done_screen.dart';
 import 'package:all_my_apps/modules/tasks_screen/tasks_screen.dart';
+import 'package:all_my_apps/shared/network/local/hive_darkmode.dart';
 import 'package:all_my_apps/shared/todo_cubit/states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -153,9 +154,12 @@ class AppCubit extends Cubit<AppStates>{
 
 bool isDark = false;
 
+  var darkMode = CacheHelper.box.get('isDark', defaultValue: false);
+
   void change()
   {
     isDark = !isDark;
+    CacheHelper.putData(key: 'isDark', value: isDark);
     emit(ChangeDarkMode());
     print(isDark);
   }
