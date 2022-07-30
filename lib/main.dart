@@ -19,7 +19,6 @@ void main() async {
   await Hive.initFlutter(dir.path);
   await Hive.openBox('dark');
 
-  dio_helper.init();
   BlocOverrides.runZoned(
         () {
           // Use cubits...
@@ -95,7 +94,7 @@ class MyApp extends StatelessWidget {
                   ),
                 ),
               ),
-              themeMode: cu.darkMode? ThemeMode.dark : ThemeMode.light ,
+              themeMode: cu.isDark? ThemeMode.dark : ThemeMode.light ,
               home: todo_screen(),
             );
           },

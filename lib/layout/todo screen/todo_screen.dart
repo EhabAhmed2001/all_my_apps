@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:all_my_apps/shared/components/components.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
 
 class todo_screen extends StatefulWidget {
 
@@ -87,11 +90,7 @@ class _todo_screenState extends State<todo_screen> {
               ),
             ],
           ),
-          body: cubit.screen[cubit.current],
-          // state is! GetDataLoadingState?
-          //           cubit.tasks.isNotEmpty?
-          //               cubit.screen[cubit.current] : showScreen(cubit.current)
-          //   : const Center(child: CircularProgressIndicator()),
+          body:cubit.screen[cubit.current],
           floatingActionButton: FloatingActionButton(
             onPressed: () {
               if (cubit.isBottomSheetShown) {
@@ -212,7 +211,6 @@ class _todo_screenState extends State<todo_screen> {
       },
     );
   }
-
   showScreen (index)
   {
     if (index == 0)

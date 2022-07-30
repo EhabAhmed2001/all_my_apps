@@ -149,6 +149,8 @@ Widget buildTaskItem({
                 children: [
                   Text(
                     '${model['title']}',
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: AppCubit.get(context).isDark ? Colors.white: Colors.black,
                       fontSize: 20,

@@ -13,9 +13,5 @@ class CacheHelper
     box.put(key, value);
   }
 
-  static bool getData({ required String key,  })
-  {
-    return box.get(key);
-  }
 
 }
