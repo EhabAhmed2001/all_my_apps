@@ -152,9 +152,8 @@ class AppCubit extends Cubit<AppStates>{
 
 // ================================= change dark and light mode =====================================
 
-bool isDark = false;
 
-  var darkMode = CacheHelper.box.get('isDark', defaultValue: false);
+  bool isDark = CacheHelper.box.get('isDark', defaultValue: false);
 
   void change()
   {
