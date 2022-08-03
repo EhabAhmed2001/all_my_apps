@@ -1,5 +1,6 @@
 import 'package:all_my_apps/shared/todo_cubit/cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:substring_highlight/substring_highlight.dart';
 
 // Material Button as a general for all apps
 Widget allAppsWidject({
@@ -147,11 +148,18 @@ Widget buildTaskItem({
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
-                    '${model['title']}',
+                  const SizedBox(
+                    height: 6,
+                  ),
+                  SubstringHighlight(
+                    text: model['title'],
+                    term: AppCubit.get(context).character,
+                    textStyleHighlight: const TextStyle(
+                      color: Colors.red,
+                    ),
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
+                    textStyle: TextStyle(
                       color: AppCubit.get(context).isDark ? Colors.white: Colors.black,
                       fontSize: 20,
                       fontWeight: FontWeight.bold,

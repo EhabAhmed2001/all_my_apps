@@ -1,15 +1,12 @@
+import 'package:all_my_apps/search/search_screen.dart';
 import 'package:all_my_apps/shared/todo_cubit/cubit.dart';
 import 'package:all_my_apps/shared/todo_cubit/states.dart';
 import 'package:flutter/material.dart';
 import 'package:all_my_apps/shared/components/components.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-
 
 class todo_screen extends StatefulWidget {
-
   @override
   State<todo_screen> createState() => _todo_screenState();
 }
@@ -19,8 +16,8 @@ class _todo_screenState extends State<todo_screen> {
   void initState() {
     super.initState();
     AppCubit.get(context).createDataBase();
-
   }
+
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
   var formKey = GlobalKey<FormState>();
@@ -33,31 +30,36 @@ class _todo_screenState extends State<todo_screen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AppCubit ,AppStates>(
-      listener: (BuildContext context, state)
-      {
-        if(state is InsertIntoDataBaseState) {
+    return BlocConsumer<AppCubit, AppStates>(
+      listener: (BuildContext context, state) {
+        if (state is InsertIntoDataBaseState) {
           Navigator.pop(context);
         }
       },
-      builder: (BuildContext context, state)
-      {
-
+      builder: (BuildContext context, state) {
         AppCubit cubit = AppCubit.get(context);
 
         return Scaffold(
-        key: scaffoldKey,
+          key: scaffoldKey,
           appBar: AppBar(
             title: Text(cubit.title[cubit.current]),
             actions: [
               IconButton(
-                  onPressed: ()
-                  {
-                    cubit.change();
-                  },
-                  icon: const Icon(Icons.brightness_6),
+                onPressed: () {
+                  AppCubit.get(context).searchList = [];
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => search_screen()),
+                  );
+                },
+                icon: const Icon(Icons.search),
               ),
-
+              IconButton(
+                onPressed: () {
+                  cubit.change();
+                },
+                icon: const Icon(Icons.brightness_6),
+              ),
             ],
           ),
           bottomNavigationBar: BottomNavigationBar(
@@ -90,17 +92,18 @@ class _todo_screenState extends State<todo_screen> {
               ),
             ],
           ),
-          body:cubit.screen[cubit.current],
+          body: cubit.screen[cubit.current],
           floatingActionButton: FloatingActionButton(
             onPressed: () {
               if (cubit.isBottomSheetShown) {
-                if (formKey.currentState!.validate())
-                {
-                  cubit.insertDatabase(
+                if (formKey.currentState!.validate()) {
+                  cubit
+                      .insertDatabase(
                     date: DateControl.text,
                     time: TimeControl.text,
                     title: TitleControl.text,
-                  ).then((value) {
+                  )
+                      .then((value) {
                     DateControl.text = '';
                     TimeControl.text = '';
                     TitleControl.text = '';
@@ -115,9 +118,9 @@ class _todo_screenState extends State<todo_screen> {
                     // });
                   });
                 }
-              }
-              else {
-                scaffoldKey.currentState?.showBottomSheet(
+              } else {
+                scaffoldKey.currentState
+                    ?.showBottomSheet(
                       (context) => Container(
                         color: Colors.grey[200],
                         padding: const EdgeInsets.all(20.0),
@@ -175,10 +178,9 @@ class _todo_screenState extends State<todo_screen> {
                                     firstDate: DateTime.now(),
                                     lastDate: DateTime.parse('2030-12-31'),
                                   ).then((value) {
-                                    DateControl.text =
-                                        DateFormat.yMMMd()
-                                            .format(value!)
-                                            .toString();
+                                    DateControl.text = DateFormat.yMMMd()
+                                        .format(value!)
+                                        .toString();
                                   });
                                 },
                                 validate: (String value) {
@@ -191,8 +193,11 @@ class _todo_screenState extends State<todo_screen> {
                           ),
                         ),
                       ),
-                ).closed.then((value) {
-                  cubit.changeFABicon(bottomSheetShown: false, fabIcon: Icons.edit);
+                    )
+                    .closed
+                    .then((value) {
+                  cubit.changeFABicon(
+                      bottomSheetShown: false, fabIcon: Icons.edit);
                   //isBottomSheetShown = false;
                   // setState(() {
                   //   FAB = Icons.edit;
@@ -211,36 +216,31 @@ class _todo_screenState extends State<todo_screen> {
       },
     );
   }
-  showScreen (index)
-  {
-    if (index == 0)
-      {
-        return const Center(
-          child: Text(
-            'NO TASKS YET',
-            style: TextStyle(
-              color: Colors.grey,
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-            ),
+
+  showScreen(index) {
+    if (index == 0) {
+      return const Center(
+        child: Text(
+          'NO TASKS YET',
+          style: TextStyle(
+            color: Colors.grey,
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
           ),
-        );
-      }
-    else if (index == 1)
-      {
-        return const Center(
-          child: Text(
-            'NO DONE TASKS YET',
-            style: TextStyle(
-              color: Colors.grey,
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-            ),
+        ),
+      );
+    } else if (index == 1) {
+      return const Center(
+        child: Text(
+          'NO DONE TASKS YET',
+          style: TextStyle(
+            color: Colors.grey,
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
           ),
-        );
-      }
-    else if (index == 2)
-    {
+        ),
+      );
+    } else if (index == 2) {
       return const Center(
         child: Text(
           'NO ARCHIVED TASKS YET',

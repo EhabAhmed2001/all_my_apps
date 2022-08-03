@@ -19,3 +19,5 @@ class GetDataFromDataBaseState extends AppStates{}
 class GetDataLoadingState extends AppStates{}
 
 class ChangeDarkMode extends AppStates{}
+
+class Search extends AppStates{}
