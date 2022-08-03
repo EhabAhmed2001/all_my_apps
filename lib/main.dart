@@ -1,16 +1,12 @@
 import 'dart:io';
-
 import 'package:all_my_apps/layout/todo%20screen/todo_screen.dart';
 import 'package:all_my_apps/shared/bloc_observer.dart';
-import 'package:all_my_apps/shared/network/remote/dio_helper.dart';
 import 'package:all_my_apps/shared/todo_cubit/cubit.dart';
 import 'package:all_my_apps/shared/todo_cubit/states.dart';
-import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
@@ -30,6 +26,8 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
